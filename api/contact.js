@@ -1,11 +1,11 @@
 // Warpath Collective lead-capture endpoint.
-// Receives the signup form POST and emails the lead via Resend.
-// Env vars (set in Vercel → Project → Settings → Environment Variables):
-//   RESEND_API_KEY  - your Resend API key (required)
-//   LEAD_TO         - the email address leads are delivered to (required)
-//   LEAD_FROM       - sender, e.g. "Warpath Collective <leads@warpathcollective.com>"
-//                     (optional; defaults to Resend's shared onboarding sender until
-//                      warpathcollective.com is verified in Resend)
+// Receives the signup form POST and emails the lead through Gmail (SMTP via Nodemailer).
+// Env vars (set in Vercel -> Project -> Settings -> Environment Variables):
+//   GMAIL_USER          - the Gmail address that sends the mail (e.g. you@gmail.com)
+//   GMAIL_APP_PASSWORD  - a Google App Password (16 chars, requires 2-Step Verification)
+//   LEAD_TO             - where leads are delivered (optional; defaults to GMAIL_USER)
+
+const nodemailer = require('nodemailer');
 
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -27,11 +27,11 @@ module.exports = async function handler(req, res) {
     return res.status(400).json({ success: false, error: 'Missing required fields' });
   }
 
-  const apiKey = process.env.RESEND_API_KEY;
-  const to = process.env.LEAD_TO;
-  const from = process.env.LEAD_FROM || 'Warpath Collective <onboarding@resend.dev>';
+  const user = process.env.GMAIL_USER;
+  const pass = process.env.GMAIL_APP_PASSWORD;
+  const to = process.env.LEAD_TO || user;
 
-  if (!apiKey || !to) {
+  if (!user || !pass) {
     return res.status(500).json({ success: false, error: 'Email not configured' });
   }
 
@@ -49,21 +49,19 @@ module.exports = async function handler(req, res) {
     '<p><strong>What they need:</strong><br>' + esc(message).replace(/\n/g, '<br>') + '</p>';
 
   try {
-    const r = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: { Authorization: 'Bearer ' + apiKey, 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        from: from,
-        to: to,
-        reply_to: email,
-        subject: 'New lead: ' + name,
-        html: html
-      })
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: { user: user, pass: pass }
     });
-    if (!r.ok) {
-      const detail = await r.text();
-      return res.status(502).json({ success: false, error: 'Send failed', detail: detail });
-    }
+    await transporter.sendMail({
+      from: '"Warpath Collective" <' + user + '>',
+      to: to,
+      replyTo: email,
+      subject: 'New lead: ' + name,
+      html: html
+    });
     return res.status(200).json({ success: true });
   } catch (err) {
     return res.status(500).json({ success: false, error: String((err && err.message) || err) });
