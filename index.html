@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Warpath Collective — done-for-you software, built fast and held for the long haul</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--charcoal:#0D0D0F;--bone:#E8E6DF;--iron:#4A4D52;--rust:#7A1E1B;--gold:#A88B4D;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--charcoal);color:var(--bone);font-family:'Inter',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;}
+.serif{font-family:'Cinzel',Georgia,serif;}
+a{text-decoration:none;color:inherit;}
+.wrap{max-width:1080px;margin:0 auto;padding:0 28px;}
+nav{display:flex;align-items:center;justify-content:space-between;padding:26px 0;}
+.brand{font-family:'Cinzel',serif;font-weight:700;letter-spacing:.16em;font-size:17px;color:var(--bone);}
+.brand i{color:var(--gold);font-weight:500;font-style:normal;}
+.btn{display:inline-block;background:var(--gold);color:#1a160c;font-weight:600;text-transform:uppercase;letter-spacing:.08em;font-size:12px;padding:12px 22px;border-radius:6px;font-family:'Inter',sans-serif;}
+.btn:hover{filter:brightness(1.08);}
+.btn-ghost{background:transparent;border:1px solid var(--iron);color:var(--bone);}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold);}
+.hero{text-align:center;padding:54px 0 100px;}
+.eyebrow{color:rgba(232,230,223,.5);font-size:11px;letter-spacing:.3em;text-transform:uppercase;}
+.logo-slot{display:block;margin:6px auto 26px;width:min(380px,84%);height:auto;}
+.lockup{font-family:'Cinzel',serif;font-weight:700;font-size:clamp(40px,8vw,72px);letter-spacing:.06em;line-height:1;color:var(--bone);margin:26px 0 0;}
+.collective{display:flex;align-items:center;justify-content:center;gap:14px;margin:14px 0 0;}
+.collective .rule{width:54px;height:1px;background:var(--iron);}
+.collective .dia{width:8px;height:8px;background:var(--gold);transform:rotate(45deg);}
+.collective .word{font-family:'Cinzel',serif;font-weight:500;font-size:16px;letter-spacing:.5em;color:var(--gold);}
+.headline{font-family:'Cinzel',serif;font-weight:500;font-size:clamp(26px,4vw,38px);line-height:1.2;color:var(--bone);max-width:18ch;margin:48px auto 0;}
+.sub{font-size:18px;color:rgba(232,230,223,.62);max-width:50ch;margin:22px auto 36px;}
+.cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.tagline{color:var(--iron);font-size:11px;letter-spacing:.34em;text-transform:uppercase;margin-top:64px;}
+@media(max-width:600px){.collective .rule{width:30px;}}
+.build{padding:8px 0 96px;}
+.sec-label{text-align:center;color:var(--gold);font-size:11px;letter-spacing:.34em;text-transform:uppercase;margin-bottom:38px;}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.card{background:#131317;border:1px solid #23242e;border-radius:12px;padding:26px 22px;}
+.card .dot{width:7px;height:7px;background:var(--gold);transform:rotate(45deg);margin-bottom:16px;}
+.card h3{font-family:'Cinzel',serif;font-weight:600;font-size:17px;color:var(--bone);margin-bottom:9px;letter-spacing:.02em;}
+.card p{font-size:14px;color:rgba(232,230,223,.58);line-height:1.6;}
+@media(max-width:860px){.grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:520px){.grid{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+<div class="brand">WARPATH <i>COLLECTIVE</i></div>
+<a class="btn" href="#contact">Join the Warpath</a>
+</nav>
+<header class="hero">
+<img class="logo-slot" src="warpath-logo.png" alt="Warpath Collective">
+<div class="eyebrow">Brotherhood &nbsp;·&nbsp; Discipline &nbsp;·&nbsp; Purpose &nbsp;·&nbsp; Legacy</div>
+<h1 class="headline serif">We build the weapons. You take the territory.</h1>
+<p class="sub">Done-for-you apps, dashboards, and automation — built fast, branded to you, and maintained for the long haul.</p>
+<div class="cta-row">
+<a class="btn" href="#contact">Join the Warpath</a>
+<a class="btn btn-ghost" href="#work">See the work</a>
+</div>
+<div class="tagline">One path &nbsp;·&nbsp; One crew &nbsp;·&nbsp; One legacy</div>
+</header>
+<section class="build" id="work">
+<p class="sec-label">What we build</p>
+<div class="grid">
+<div class="card"><div class="dot"></div><h3>Custom apps</h3><p>Branded web apps, dashboards, and client portals — built on infrastructure we reuse, so they ship in days, not months.</p></div>
+<div class="card"><div class="dot"></div><h3>Sites &amp; storefronts</h3><p>High-converting marketing sites and storefronts, built to your brand and made to sell.</p></div>
+<div class="card"><div class="dot"></div><h3>Automation</h3><p>We kill the manual busywork — the workflows, syncs, and ops that quietly eat your week.</p></div>
+<div class="card"><div class="dot"></div><h3>Retainers</h3><p>We don't vanish at launch. We host it, maintain it, and keep it sharp every single month.</p></div>
+</div>
+</section>
+</div>
+</body>
+</html>
