@@ -71,6 +71,18 @@ html.js .reveal.in{opacity:1;transform:none;}
 @media(max-width:760px){.steps{grid-template-columns:1fr;gap:0;}.step{padding:18px 0;border-top:1px solid var(--line);}}
 @media(max-width:640px){.navlinks a:not(.btn){display:none;}}
 @media(max-width:520px){.grid,.proofgrid{grid-template-columns:1fr;}.sec-label::before,.sec-label::after{width:26px;}}
+.form{max-width:520px;margin:30px auto 0;text-align:left;}
+.frow{margin-bottom:14px;}
+.form label{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:rgba(232,230,223,.6);margin-bottom:7px;}
+.form input,.form textarea{width:100%;background:#0b0b0e;border:1px solid var(--line);border-radius:6px;color:var(--bone);font-family:'Inter',sans-serif;font-size:15px;padding:12px 14px;transition:border-color .15s ease;}
+.form input::placeholder,.form textarea::placeholder{color:#54545c;}
+.form input:focus,.form textarea:focus{outline:none;border-color:var(--gold);}
+.form textarea{min-height:108px;resize:vertical;}
+.form button.btn{width:100%;border:none;cursor:pointer;font-size:13px;padding:15px;margin-top:6px;}
+.form-msg{margin-top:14px;font-size:14px;min-height:20px;text-align:center;}
+.form-msg.ok{color:var(--gold);}
+.form-msg.err{color:#cc8866;}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
 </style>
 </head>
 <body>
@@ -128,7 +140,18 @@ html.js .reveal.in{opacity:1;transform:none;}
 <div class="dia"></div>
 <h2 class="serif">Ready to take your territory?</h2>
 <p>Tell us where your business bleeds time or leaks leads. We'll build the weapon that fixes it — and keep it sharp.</p>
-<div class="cta-row"><a class="btn" href="mailto:hello@warpathcollective.com">Join the Warpath</a></div>
+<form class="form" id="signup">
+<input type="hidden" name="access_key" value="YOUR_WEB3FORMS_KEY">
+<input type="hidden" name="subject" value="New Warpath Collective lead">
+<input type="hidden" name="from_name" value="Warpath Collective site">
+<input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off">
+<div class="frow"><label for="f-name">Name</label><input id="f-name" type="text" name="name" placeholder="Your name" required></div>
+<div class="frow"><label for="f-email">Email</label><input id="f-email" type="email" name="email" placeholder="you@business.com" required></div>
+<div class="frow"><label for="f-biz">Business or website</label><input id="f-biz" type="text" name="business" placeholder="optional"></div>
+<div class="frow"><label for="f-msg">What do you need built?</label><textarea id="f-msg" name="message" placeholder="The app, site, or automation you want — and what it needs to do." required></textarea></div>
+<button class="btn" type="submit">Join the Warpath</button>
+<div class="form-msg" id="formMsg"></div>
+</form>
 </div>
 </section>
 </main>
@@ -141,6 +164,8 @@ html.js .reveal.in{opacity:1;transform:none;}
 document.documentElement.classList.add('js');
 var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.12});
 document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+var f=document.getElementById('signup');
+if(f){f.addEventListener('submit',function(e){e.preventDefault();var m=document.getElementById('formMsg');m.className='form-msg';m.textContent='Sending…';fetch('https://api.web3forms.com/submit',{method:'POST',body:new FormData(f)}).then(function(r){return r.json();}).then(function(j){if(j.success){f.reset();m.className='form-msg ok';m.textContent="You're on the Warpath. We'll be in touch within a day.";}else{m.className='form-msg err';m.textContent='Something went wrong — email us directly instead.';}}).catch(function(){m.className='form-msg err';m.textContent='Something went wrong — email us directly instead.';});});}
 </script>
 </body>
 </html>
