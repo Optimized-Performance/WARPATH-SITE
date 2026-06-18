@@ -16,7 +16,7 @@ const RUST = '#7A1E1B';
 const GOLD = '#A88B4D';
 const INK = '#2a2a2e';
 const RULE = '#e4dfce';
-const LOGO_URL = 'https://warpathcollective.com/warpath-badge.png';
+const LOGO_URL = 'https://warpathcollective.com/warpath-symbol-cream.png';
 
 function esc(s) {
   return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
@@ -36,9 +36,11 @@ function shell(preheader, inner) {
     '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + CHARCOAL + ';padding:28px 12px;">' +
     '<tr><td align="center">' +
     '<table role="presentation" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;background:' + BONE + ';border-radius:12px;overflow:hidden;">' +
-    // header: contained badge on the cream card (seamless)
-    '<tr><td align="center" style="padding:34px 30px 8px;">' +
-    '<img src="' + LOGO_URL + '" width="116" height="116" alt="Warpath Collective" style="display:block;width:116px;height:116px;border-radius:16px;border:0;">' +
+    // header: ship/W symbol + crisp wordmark text (stays sharp at any size)
+    '<tr><td align="center" style="padding:32px 30px 4px;">' +
+    '<img src="' + LOGO_URL + '" width="118" alt="" style="display:block;margin:0 auto 14px;width:118px;max-width:46%;height:auto;border:0;">' +
+    '<div style="font-family:Georgia,\'Times New Roman\',serif;font-weight:600;letter-spacing:5px;font-size:22px;color:' + CHARCOAL + ';">WARPATH</div>' +
+    '<div style="font-family:Georgia,\'Times New Roman\',serif;font-weight:600;letter-spacing:5px;font-size:11px;color:' + GOLD + ';margin-top:5px;">COLLECTIVE</div>' +
     '</td></tr>' +
     '<tr><td style="padding:18px 44px 8px;"><div style="height:1px;background:' + GOLD + ';opacity:.5;line-height:1px;font-size:1px;">&nbsp;</div></td></tr>' +
     // content
