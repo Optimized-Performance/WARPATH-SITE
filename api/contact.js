@@ -16,7 +16,7 @@ const RUST = '#7A1E1B';
 const GOLD = '#A88B4D';
 const INK = '#2a2a2e';
 const RULE = '#e4dfce';
-const LOGO_URL = 'https://warpathcollective.com/warpath-logo-email.png';
+const LOGO_URL = 'https://warpathcollective.com/warpath-badge.png';
 
 function esc(s) {
   return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
@@ -35,13 +35,14 @@ function shell(preheader, inner) {
     '<div style="display:none;max-height:0;overflow:hidden;opacity:0;">' + esc(preheader) + '</div>' +
     '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + CHARCOAL + ';padding:28px 12px;">' +
     '<tr><td align="center">' +
-    '<table role="presentation" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;background:' + BONE + ';border-radius:10px;overflow:hidden;border:1px solid #23231d;">' +
-    // header
-    '<tr><td align="center" style="background:#ffffff;padding:30px 30px 24px;border-bottom:2px solid ' + GOLD + ';">' +
-    '<img src="' + LOGO_URL + '" width="200" alt="Warpath Collective" style="display:block;width:200px;max-width:72%;height:auto;border:0;">' +
+    '<table role="presentation" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;background:' + BONE + ';border-radius:12px;overflow:hidden;">' +
+    // header: contained badge on the cream card (seamless)
+    '<tr><td align="center" style="padding:34px 30px 8px;">' +
+    '<img src="' + LOGO_URL + '" width="116" height="116" alt="Warpath Collective" style="display:block;width:116px;height:116px;border-radius:16px;border:0;">' +
     '</td></tr>' +
+    '<tr><td style="padding:18px 44px 8px;"><div style="height:1px;background:' + GOLD + ';opacity:.5;line-height:1px;font-size:1px;">&nbsp;</div></td></tr>' +
     // content
-    '<tr><td style="padding:36px 42px 40px;font-family:Arial,Helvetica,sans-serif;color:' + INK + ';">' + inner + '</td></tr>' +
+    '<tr><td style="padding:22px 44px 40px;font-family:Arial,Helvetica,sans-serif;color:' + INK + ';">' + inner + '</td></tr>' +
     // footer
     '<tr><td align="center" style="background:' + CHARCOAL + ';padding:26px 30px;">' +
     '<div style="font-family:Georgia,\'Times New Roman\',serif;letter-spacing:3px;font-size:13px;color:' + GOLD + ';">WE ROW TOGETHER</div>' +
@@ -132,7 +133,7 @@ module.exports = async function handler(req, res) {
     '<h1 style="margin:6px 0 20px;font-family:Georgia,\'Times New Roman\',serif;font-size:28px;font-weight:normal;color:' + CHARCOAL + ';">You\'re on the Warpath.</h1>' +
     '<p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:' + INK + ';">Hi ' + esc(lead.name) + ',</p>' +
     '<p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:' + INK + ';">Thanks for reaching out to Warpath Collective. We\'ve got your message, and one of us will be in touch within one business day.</p>' +
-    '<div style="margin:24px 0;padding:18px 22px;background:#efeade;border-left:3px solid ' + GOLD + ';font-size:14px;line-height:1.6;color:#4A4D52;">' +
+    '<div style="margin:24px 0;padding:18px 22px;background:#ebe5d6;border-left:3px solid ' + GOLD + ';font-size:14px;line-height:1.6;color:#4A4D52;">' +
     '<div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:' + GOLD + ';padding-bottom:8px;font-weight:bold;">What you sent us</div>' +
     msgHtml +
     '</div>' +
