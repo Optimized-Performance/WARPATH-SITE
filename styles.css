@@ -5,9 +5,9 @@ body{background:radial-gradient(125% 85% at 50% -12%, #18181d 0%, #0d0d0f 48%, #
 body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.045;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
 .serif{font-family:'Cinzel',Georgia,serif;}
 a{text-decoration:none;color:inherit;}
-.wrap{max-width:1280px;margin:0 auto;padding:0 28px;}
+.wrap{max-width:1440px;margin:0 auto;padding:0 40px;}
 .topbar{position:sticky;top:0;z-index:50;background:rgba(11,11,13,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,.05);}
-.topbar-inner{max-width:1280px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;justify-content:space-between;}
+.topbar-inner{max-width:1440px;margin:0 auto;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;}
 .brand{font-family:'Cinzel',serif;font-weight:700;letter-spacing:.18em;font-size:16px;color:var(--bone);}
 .brand i{color:var(--gold);font-weight:500;font-style:normal;}
 .navlinks{display:flex;align-items:center;gap:28px;}
@@ -20,7 +20,7 @@ a{text-decoration:none;color:inherit;}
 .btn-ghost{background:transparent;border:1px solid var(--iron);color:var(--bone);}
 .btn-ghost:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-1px);}
 #work,#model,#proof,#contact{scroll-margin-top:82px;}
-.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:center;max-width:1280px;margin:0 auto;padding:0 28px;text-align:left;}
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;max-width:1440px;margin:0 auto;padding:0 40px;text-align:left;}
 .hero-band{position:relative;overflow:hidden;padding:76px 0 92px;}
 .hero-emblem{display:flex;justify-content:center;}
 .hero-emblem img{width:min(440px,100%);height:auto;}
