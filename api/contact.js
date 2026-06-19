@@ -16,13 +16,17 @@ const RUST = '#7A1E1B';
 const INK = '#4b463c';        // warm body text
 const INK_STRONG = '#15120c'; // headlines / emphasis
 const QUOTE = '#5c574b';
-const IRON = '#6c6f74';
+const FOOT = '#8a8d92';       // footer subtext on charcoal
 const HAIR = '#e3ddcc';       // hairline rules on the cream card
-const LOGO_URL = 'https://warpathcollective.com/warpath-symbol-cream.png';
 
-// Type stacks — Cinzel (brand display) + Inter (brand body), with safe fallbacks.
-const SERIF = "'Cinzel',Georgia,'Times New Roman',serif";
-const SANS = "'Inter',Arial,Helvetica,sans-serif";
+// Assets (served from the site root)
+const SYMBOL_URL = 'https://warpathcollective.com/warpath-symbol-cream.png';
+const WM_DARK = 'https://warpathcollective.com/warpath-wm-dark.png';   // wordmark for the cream card
+const WM_GOLD = 'https://warpathcollective.com/warpath-wm-gold.png';   // wordmark for the charcoal footer
+const FONT_URL = 'https://warpathcollective.com/fonts/BaumWell.ttf';
+
+// One body font (BaumWell) with a matching serif fallback for clients that strip web fonts (e.g. Gmail).
+const FONT = "'BaumWell',Georgia,'Times New Roman',serif";
 
 function esc(s) {
   return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
@@ -30,47 +34,46 @@ function esc(s) {
   });
 }
 
-// Wraps inner HTML in the branded frame: logo lockup + content + charcoal footer.
+// Wraps inner HTML in the branded frame: symbol + wordmark, content, charcoal footer.
 function shell(preheader, inner) {
   return '<!DOCTYPE html><html lang="en"><head>' +
     '<meta charset="utf-8">' +
     '<meta name="viewport" content="width=device-width,initial-scale=1">' +
     '<meta name="color-scheme" content="light only">' +
-    '<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">' +
+    '<style>@font-face{font-family:\'BaumWell\';src:url(\'' + FONT_URL + '\') format(\'truetype\');font-weight:normal;font-style:normal;font-display:swap;}</style>' +
     '</head>' +
     '<body style="margin:0;padding:0;background:' + CHARCOAL + ';">' +
     '<div style="display:none;max-height:0;overflow:hidden;opacity:0;">' + esc(preheader) + '</div>' +
     '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + CHARCOAL + ';padding:34px 14px;">' +
     '<tr><td align="center">' +
-    '<table role="presentation" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;background:' + CARD + ';border-radius:14px;overflow:hidden;">' +
-    // header: symbol + Cinzel wordmark lockup
-    '<tr><td align="center" style="padding:46px 44px 0;">' +
-    '<img src="' + LOGO_URL + '" width="90" alt="" style="display:block;margin:0 auto 16px;width:90px;height:auto;border:0;">' +
-    '<div style="font-family:' + SERIF + ';font-weight:600;letter-spacing:7px;font-size:21px;color:' + INK_STRONG + ';">WARPATH</div>' +
-    '<div style="font-family:' + SERIF + ';font-weight:500;letter-spacing:8px;font-size:10px;color:' + GOLD + ';margin-top:7px;">COLLECTIVE</div>' +
+    '<table role="presentation" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;background:' + CARD + ';border-radius:14px;overflow:hidden;font-family:' + FONT + ';">' +
+    // header: ship/W symbol + Enchanted Land wordmark image
+    '<tr><td align="center" style="padding:44px 44px 0;">' +
+    '<img src="' + SYMBOL_URL + '" width="84" alt="" style="display:block;margin:0 auto 14px;width:84px;height:auto;border:0;">' +
+    '<img src="' + WM_DARK + '" width="210" alt="Warpath Collective" style="display:block;margin:0 auto;width:210px;max-width:80%;height:auto;border:0;">' +
     '</td></tr>' +
-    '<tr><td align="center" style="padding:24px 0 0;"><div style="width:46px;height:1px;background:' + GOLD + ';line-height:1px;font-size:1px;">&nbsp;</div></td></tr>' +
+    '<tr><td align="center" style="padding:22px 0 0;"><div style="width:46px;height:1px;background:' + GOLD + ';line-height:1px;font-size:1px;">&nbsp;</div></td></tr>' +
     // content
-    '<tr><td style="padding:32px 50px 46px;">' + inner + '</td></tr>' +
+    '<tr><td style="padding:32px 50px 46px;font-family:' + FONT + ';color:' + INK + ';">' + inner + '</td></tr>' +
     // footer
-    '<tr><td align="center" style="background:' + CHARCOAL + ';padding:26px 30px;">' +
-    '<div style="font-family:' + SERIF + ';font-weight:500;letter-spacing:5px;font-size:12px;color:' + GOLD + ';">WARPATH COLLECTIVE</div>' +
-    '<div style="font-family:' + SANS + ';font-size:11px;letter-spacing:.5px;color:' + IRON + ';padding-top:9px;">warpathcollective.com</div>' +
+    '<tr><td align="center" style="background:' + CHARCOAL + ';padding:24px 30px;">' +
+    '<img src="' + WM_GOLD + '" width="150" alt="Warpath Collective" style="display:block;margin:0 auto 8px;width:150px;height:auto;border:0;">' +
+    '<div style="font-family:' + FONT + ';font-size:12.5px;letter-spacing:.5px;color:' + FOOT + ';">warpathcollective.com</div>' +
     '</td></tr>' +
     '</table></td></tr></table></body></html>';
 }
 
-// Eyebrow label (tiny tracked caps).
+// Eyebrow label (tracked caps).
 function eyebrow(text, color) {
-  return '<div style="font-family:' + SANS + ';font-weight:600;font-size:11px;letter-spacing:2.5px;color:' + color + ';text-transform:uppercase;">' + text + '</div>';
+  return '<div style="font-family:' + FONT + ';font-size:12px;letter-spacing:2.5px;color:' + color + ';text-transform:uppercase;">' + text + '</div>';
 }
 
 // A labeled detail row for the internal lead email. valueHtml is already-safe HTML.
 function row(label, valueHtml) {
   return '<tr>' +
     '<td style="padding:13px 0;border-top:1px solid ' + HAIR + ';vertical-align:top;width:128px;' +
-    'font-family:' + SANS + ';font-weight:600;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:' + GOLD + ';">' + label + '</td>' +
-    '<td style="padding:13px 0;border-top:1px solid ' + HAIR + ';vertical-align:top;font-family:' + SANS + ';font-size:14.5px;line-height:1.6;color:' + INK + ';">' + valueHtml + '</td>' +
+    'font-family:' + FONT + ';font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:' + GOLD + ';">' + label + '</td>' +
+    '<td style="padding:13px 0;border-top:1px solid ' + HAIR + ';vertical-align:top;font-family:' + FONT + ';font-size:15.5px;line-height:1.6;color:' + INK + ';">' + valueHtml + '</td>' +
     '</tr>';
 }
 
@@ -123,7 +126,7 @@ module.exports = async function handler(req, res) {
   // --- Internal "new lead" email -------------------------------------------
   const leadInner =
     eyebrow('New lead', RUST) +
-    '<div style="font-family:' + SANS + ';font-weight:600;font-size:23px;line-height:1.25;color:' + INK_STRONG + ';margin:12px 0 24px;">' + esc(lead.name) + '</div>' +
+    '<div style="font-family:' + FONT + ';font-size:25px;line-height:1.25;color:' + INK_STRONG + ';margin:12px 0 24px;">' + esc(lead.name) + '</div>' +
     '<table role="presentation" width="100%" cellpadding="0" cellspacing="0">' +
     row('Email', '<a href="mailto:' + esc(lead.email) + '" style="color:' + RUST + ';text-decoration:none;">' + esc(lead.email) + '</a>') +
     row('Business', esc(lead.business || '—')) +
@@ -131,7 +134,7 @@ module.exports = async function handler(req, res) {
     '</table>' +
     '<div style="padding-top:30px;">' +
     '<a href="mailto:' + esc(lead.email) + '?subject=' + encodeURIComponent('Re: your Warpath Collective inquiry') + '" ' +
-    'style="display:inline-block;background:' + RUST + ';color:' + CARD + ';font-family:' + SANS + ';font-size:13px;font-weight:600;letter-spacing:.5px;text-decoration:none;padding:13px 28px;border-radius:6px;">Reply to ' + esc(lead.name) + '</a>' +
+    'style="display:inline-block;background:' + RUST + ';color:' + CARD + ';font-family:' + FONT + ';font-size:15px;letter-spacing:.5px;text-decoration:none;padding:13px 30px;border-radius:6px;">Reply to ' + esc(lead.name) + '</a>' +
     '</div>';
 
   const leadText =
@@ -144,15 +147,15 @@ module.exports = async function handler(req, res) {
   // --- Customer-facing auto-reply ------------------------------------------
   const replyInner =
     eyebrow('Message received', GOLD) +
-    '<div style="font-family:' + SERIF + ';font-weight:600;font-size:29px;letter-spacing:.5px;line-height:1.2;color:' + INK_STRONG + ';margin:12px 0 22px;">You\'re on the Warpath.</div>' +
-    '<p style="font-family:' + SANS + ';font-size:15.5px;line-height:1.75;color:' + INK + ';margin:0 0 16px;">Hi ' + esc(lead.name) + ',</p>' +
-    '<p style="font-family:' + SANS + ';font-size:15.5px;line-height:1.75;color:' + INK + ';margin:0 0 26px;">Thanks for reaching out to Warpath Collective. We have your message, and one of us will be in touch within one business day.</p>' +
+    '<div style="font-family:' + FONT + ';font-size:30px;line-height:1.25;color:' + INK_STRONG + ';margin:12px 0 22px;">You\'re on the Warpath.</div>' +
+    '<p style="font-family:' + FONT + ';font-size:16.5px;line-height:1.7;color:' + INK + ';margin:0 0 16px;">Hi ' + esc(lead.name) + ',</p>' +
+    '<p style="font-family:' + FONT + ';font-size:16.5px;line-height:1.7;color:' + INK + ';margin:0 0 26px;">Thanks for reaching out to Warpath Collective. We have your message, and one of us will be in touch within one business day.</p>' +
     '<div style="border-left:2px solid ' + GOLD + ';padding:2px 0 2px 20px;margin:0 0 30px;">' +
-    '<div style="font-family:' + SANS + ';font-weight:600;font-size:10.5px;letter-spacing:2px;color:' + GOLD + ';text-transform:uppercase;margin-bottom:7px;">What you sent us</div>' +
-    '<div style="font-family:' + SANS + ';font-size:14.5px;line-height:1.7;color:' + QUOTE + ';">' + msgHtml + '</div>' +
+    '<div style="font-family:' + FONT + ';font-size:12px;letter-spacing:1.5px;color:' + GOLD + ';text-transform:uppercase;margin-bottom:7px;">What you sent us</div>' +
+    '<div style="font-family:' + FONT + ';font-size:15.5px;line-height:1.7;color:' + QUOTE + ';">' + msgHtml + '</div>' +
     '</div>' +
-    '<p style="font-family:' + SANS + ';font-size:15.5px;color:' + INK_STRONG + ';margin:0 0 5px;">We row together,</p>' +
-    '<p style="font-family:' + SERIF + ';font-weight:500;font-size:12px;letter-spacing:3px;color:' + RUST + ';margin:0;text-transform:uppercase;">The Warpath Collective Crew</p>';
+    '<p style="font-family:' + FONT + ';font-size:16.5px;color:' + INK_STRONG + ';margin:0 0 4px;">We row together,</p>' +
+    '<p style="font-family:' + FONT + ';font-size:15px;letter-spacing:1px;color:' + RUST + ';margin:0;text-transform:uppercase;">The Warpath Collective Crew</p>';
 
   const replyText =
     'Hi ' + lead.name + ',\n\n' +
