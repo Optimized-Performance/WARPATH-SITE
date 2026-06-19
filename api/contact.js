@@ -30,6 +30,7 @@ function shell(preheader, inner) {
     '<meta charset="utf-8">' +
     '<meta name="viewport" content="width=device-width,initial-scale=1">' +
     '<meta name="color-scheme" content="light only">' +
+    '<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&display=swap" rel="stylesheet">' +
     '</head>' +
     '<body style="margin:0;padding:0;background:' + CHARCOAL + ';">' +
     '<div style="display:none;max-height:0;overflow:hidden;opacity:0;">' + esc(preheader) + '</div>' +
@@ -39,8 +40,8 @@ function shell(preheader, inner) {
     // header: ship/W symbol + crisp wordmark text (stays sharp at any size)
     '<tr><td align="center" style="padding:32px 30px 4px;">' +
     '<img src="' + LOGO_URL + '" width="118" alt="" style="display:block;margin:0 auto 14px;width:118px;max-width:46%;height:auto;border:0;">' +
-    '<div style="font-family:Georgia,\'Times New Roman\',serif;font-weight:600;letter-spacing:5px;font-size:22px;color:' + CHARCOAL + ';">WARPATH</div>' +
-    '<div style="font-family:Georgia,\'Times New Roman\',serif;font-weight:600;letter-spacing:5px;font-size:11px;color:' + GOLD + ';margin-top:5px;">COLLECTIVE</div>' +
+    '<div style="font-family:\'Cinzel\',Georgia,\'Times New Roman\',serif;font-weight:700;letter-spacing:4px;font-size:24px;color:' + CHARCOAL + ';">WARPATH</div>' +
+    '<div style="font-family:\'Cinzel\',Georgia,\'Times New Roman\',serif;font-weight:600;letter-spacing:6px;font-size:11px;color:' + GOLD + ';margin-top:6px;">COLLECTIVE</div>' +
     '</td></tr>' +
     '<tr><td style="padding:18px 44px 8px;"><div style="height:1px;background:' + GOLD + ';opacity:.5;line-height:1px;font-size:1px;">&nbsp;</div></td></tr>' +
     // content
