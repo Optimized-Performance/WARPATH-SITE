@@ -10,13 +10,19 @@ const { Resend } = require('resend');
 
 // Brand palette
 const CHARCOAL = '#0D0D0F';
-const BONE = '#F5F3EC';
-const IRON = '#6c6f74';
-const RUST = '#7A1E1B';
+const CARD = '#F6F4EE';
 const GOLD = '#A88B4D';
-const INK = '#2a2a2e';
-const RULE = '#e4dfce';
+const RUST = '#7A1E1B';
+const INK = '#4b463c';        // warm body text
+const INK_STRONG = '#15120c'; // headlines / emphasis
+const QUOTE = '#5c574b';
+const IRON = '#6c6f74';
+const HAIR = '#e3ddcc';       // hairline rules on the cream card
 const LOGO_URL = 'https://warpathcollective.com/warpath-symbol-cream.png';
+
+// Type stacks — Cinzel (brand display) + Inter (brand body), with safe fallbacks.
+const SERIF = "'Cinzel',Georgia,'Times New Roman',serif";
+const SANS = "'Inter',Arial,Helvetica,sans-serif";
 
 function esc(s) {
   return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) {
@@ -24,42 +30,47 @@ function esc(s) {
   });
 }
 
-// Wraps inner HTML in the branded frame: logo header + content card + charcoal footer.
+// Wraps inner HTML in the branded frame: logo lockup + content + charcoal footer.
 function shell(preheader, inner) {
   return '<!DOCTYPE html><html lang="en"><head>' +
     '<meta charset="utf-8">' +
     '<meta name="viewport" content="width=device-width,initial-scale=1">' +
     '<meta name="color-scheme" content="light only">' +
-    '<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&display=swap" rel="stylesheet">' +
+    '<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">' +
     '</head>' +
     '<body style="margin:0;padding:0;background:' + CHARCOAL + ';">' +
     '<div style="display:none;max-height:0;overflow:hidden;opacity:0;">' + esc(preheader) + '</div>' +
-    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + CHARCOAL + ';padding:28px 12px;">' +
+    '<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:' + CHARCOAL + ';padding:34px 14px;">' +
     '<tr><td align="center">' +
-    '<table role="presentation" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;background:' + BONE + ';border-radius:12px;overflow:hidden;">' +
-    // header: ship/W symbol + crisp wordmark text (stays sharp at any size)
-    '<tr><td align="center" style="padding:32px 30px 4px;">' +
-    '<img src="' + LOGO_URL + '" width="118" alt="" style="display:block;margin:0 auto 14px;width:118px;max-width:46%;height:auto;border:0;">' +
-    '<div style="font-family:\'Cinzel\',Georgia,\'Times New Roman\',serif;font-weight:700;letter-spacing:4px;font-size:24px;color:' + CHARCOAL + ';">WARPATH</div>' +
-    '<div style="font-family:\'Cinzel\',Georgia,\'Times New Roman\',serif;font-weight:600;letter-spacing:6px;font-size:11px;color:' + GOLD + ';margin-top:6px;">COLLECTIVE</div>' +
+    '<table role="presentation" cellpadding="0" cellspacing="0" style="width:600px;max-width:600px;background:' + CARD + ';border-radius:14px;overflow:hidden;">' +
+    // header: symbol + Cinzel wordmark lockup
+    '<tr><td align="center" style="padding:46px 44px 0;">' +
+    '<img src="' + LOGO_URL + '" width="90" alt="" style="display:block;margin:0 auto 16px;width:90px;height:auto;border:0;">' +
+    '<div style="font-family:' + SERIF + ';font-weight:600;letter-spacing:7px;font-size:21px;color:' + INK_STRONG + ';">WARPATH</div>' +
+    '<div style="font-family:' + SERIF + ';font-weight:500;letter-spacing:8px;font-size:10px;color:' + GOLD + ';margin-top:7px;">COLLECTIVE</div>' +
     '</td></tr>' +
-    '<tr><td style="padding:18px 44px 8px;"><div style="height:1px;background:' + GOLD + ';opacity:.5;line-height:1px;font-size:1px;">&nbsp;</div></td></tr>' +
+    '<tr><td align="center" style="padding:24px 0 0;"><div style="width:46px;height:1px;background:' + GOLD + ';line-height:1px;font-size:1px;">&nbsp;</div></td></tr>' +
     // content
-    '<tr><td style="padding:22px 44px 40px;font-family:Arial,Helvetica,sans-serif;color:' + INK + ';">' + inner + '</td></tr>' +
+    '<tr><td style="padding:32px 50px 46px;">' + inner + '</td></tr>' +
     // footer
     '<tr><td align="center" style="background:' + CHARCOAL + ';padding:26px 30px;">' +
-    '<div style="font-family:Georgia,\'Times New Roman\',serif;letter-spacing:3px;font-size:13px;color:' + GOLD + ';">WE ROW TOGETHER</div>' +
-    '<div style="font-family:Arial,Helvetica,sans-serif;font-size:11px;color:' + IRON + ';padding-top:8px;">Warpath Collective &middot; warpathcollective.com</div>' +
+    '<div style="font-family:' + SERIF + ';font-weight:500;letter-spacing:5px;font-size:12px;color:' + GOLD + ';">WARPATH COLLECTIVE</div>' +
+    '<div style="font-family:' + SANS + ';font-size:11px;letter-spacing:.5px;color:' + IRON + ';padding-top:9px;">warpathcollective.com</div>' +
     '</td></tr>' +
     '</table></td></tr></table></body></html>';
+}
+
+// Eyebrow label (tiny tracked caps).
+function eyebrow(text, color) {
+  return '<div style="font-family:' + SANS + ';font-weight:600;font-size:11px;letter-spacing:2.5px;color:' + color + ';text-transform:uppercase;">' + text + '</div>';
 }
 
 // A labeled detail row for the internal lead email. valueHtml is already-safe HTML.
 function row(label, valueHtml) {
   return '<tr>' +
-    '<td style="padding:13px 0;border-top:1px solid ' + RULE + ';vertical-align:top;width:140px;' +
-    'font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:' + GOLD + ';font-weight:bold;">' + label + '</td>' +
-    '<td style="padding:13px 0;border-top:1px solid ' + RULE + ';vertical-align:top;font-size:15px;line-height:1.55;color:' + INK + ';">' + valueHtml + '</td>' +
+    '<td style="padding:13px 0;border-top:1px solid ' + HAIR + ';vertical-align:top;width:128px;' +
+    'font-family:' + SANS + ';font-weight:600;font-size:10.5px;letter-spacing:1.5px;text-transform:uppercase;color:' + GOLD + ';">' + label + '</td>' +
+    '<td style="padding:13px 0;border-top:1px solid ' + HAIR + ';vertical-align:top;font-family:' + SANS + ';font-size:14.5px;line-height:1.6;color:' + INK + ';">' + valueHtml + '</td>' +
     '</tr>';
 }
 
@@ -111,8 +122,8 @@ module.exports = async function handler(req, res) {
 
   // --- Internal "new lead" email -------------------------------------------
   const leadInner =
-    '<div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;letter-spacing:2px;color:' + RUST + ';font-weight:bold;">NEW LEAD</div>' +
-    '<h1 style="margin:6px 0 24px;font-family:Georgia,\'Times New Roman\',serif;font-size:26px;font-weight:normal;color:' + CHARCOAL + ';">' + esc(lead.name) + '</h1>' +
+    eyebrow('New lead', RUST) +
+    '<div style="font-family:' + SANS + ';font-weight:600;font-size:23px;line-height:1.25;color:' + INK_STRONG + ';margin:12px 0 24px;">' + esc(lead.name) + '</div>' +
     '<table role="presentation" width="100%" cellpadding="0" cellspacing="0">' +
     row('Email', '<a href="mailto:' + esc(lead.email) + '" style="color:' + RUST + ';text-decoration:none;">' + esc(lead.email) + '</a>') +
     row('Business', esc(lead.business || '—')) +
@@ -120,7 +131,7 @@ module.exports = async function handler(req, res) {
     '</table>' +
     '<div style="padding-top:30px;">' +
     '<a href="mailto:' + esc(lead.email) + '?subject=' + encodeURIComponent('Re: your Warpath Collective inquiry') + '" ' +
-    'style="display:inline-block;background:' + RUST + ';color:#F5F3EC;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:bold;letter-spacing:.5px;text-decoration:none;padding:13px 28px;border-radius:5px;">Reply to ' + esc(lead.name) + '</a>' +
+    'style="display:inline-block;background:' + RUST + ';color:' + CARD + ';font-family:' + SANS + ';font-size:13px;font-weight:600;letter-spacing:.5px;text-decoration:none;padding:13px 28px;border-radius:6px;">Reply to ' + esc(lead.name) + '</a>' +
     '</div>';
 
   const leadText =
@@ -132,19 +143,20 @@ module.exports = async function handler(req, res) {
 
   // --- Customer-facing auto-reply ------------------------------------------
   const replyInner =
-    '<div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;letter-spacing:2px;color:' + GOLD + ';font-weight:bold;">MESSAGE RECEIVED</div>' +
-    '<h1 style="margin:6px 0 20px;font-family:Georgia,\'Times New Roman\',serif;font-size:28px;font-weight:normal;color:' + CHARCOAL + ';">You\'re on the Warpath.</h1>' +
-    '<p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:' + INK + ';">Hi ' + esc(lead.name) + ',</p>' +
-    '<p style="margin:0 0 16px;font-size:16px;line-height:1.65;color:' + INK + ';">Thanks for reaching out to Warpath Collective. We\'ve got your message, and one of us will be in touch within one business day.</p>' +
-    '<div style="margin:24px 0;padding:18px 22px;background:#ebe5d6;border-left:3px solid ' + GOLD + ';font-size:14px;line-height:1.6;color:#4A4D52;">' +
-    '<div style="font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:' + GOLD + ';padding-bottom:8px;font-weight:bold;">What you sent us</div>' +
-    msgHtml +
+    eyebrow('Message received', GOLD) +
+    '<div style="font-family:' + SERIF + ';font-weight:600;font-size:29px;letter-spacing:.5px;line-height:1.2;color:' + INK_STRONG + ';margin:12px 0 22px;">You\'re on the Warpath.</div>' +
+    '<p style="font-family:' + SANS + ';font-size:15.5px;line-height:1.75;color:' + INK + ';margin:0 0 16px;">Hi ' + esc(lead.name) + ',</p>' +
+    '<p style="font-family:' + SANS + ';font-size:15.5px;line-height:1.75;color:' + INK + ';margin:0 0 26px;">Thanks for reaching out to Warpath Collective. We have your message, and one of us will be in touch within one business day.</p>' +
+    '<div style="border-left:2px solid ' + GOLD + ';padding:2px 0 2px 20px;margin:0 0 30px;">' +
+    '<div style="font-family:' + SANS + ';font-weight:600;font-size:10.5px;letter-spacing:2px;color:' + GOLD + ';text-transform:uppercase;margin-bottom:7px;">What you sent us</div>' +
+    '<div style="font-family:' + SANS + ';font-size:14.5px;line-height:1.7;color:' + QUOTE + ';">' + msgHtml + '</div>' +
     '</div>' +
-    '<p style="margin:20px 0 0;font-family:Georgia,\'Times New Roman\',serif;font-size:16px;line-height:1.5;color:' + CHARCOAL + ';">We row together,<br><span style="color:' + RUST + ';">The Warpath Collective crew</span></p>';
+    '<p style="font-family:' + SANS + ';font-size:15.5px;color:' + INK_STRONG + ';margin:0 0 5px;">We row together,</p>' +
+    '<p style="font-family:' + SERIF + ';font-weight:500;font-size:12px;letter-spacing:3px;color:' + RUST + ';margin:0;text-transform:uppercase;">The Warpath Collective Crew</p>';
 
   const replyText =
     'Hi ' + lead.name + ',\n\n' +
-    'Thanks for reaching out to Warpath Collective. We received your message and will be in touch within one business day.\n\n' +
+    'Thanks for reaching out to Warpath Collective. We have your message, and one of us will be in touch within one business day.\n\n' +
     'What you sent us:\n' + lead.message + '\n\n' +
     'We row together,\nThe Warpath Collective crew';
 
@@ -171,7 +183,7 @@ module.exports = async function handler(req, res) {
         to: [lead.email],
         replyTo: to,
         subject: 'We got your message — Warpath Collective',
-        html: shell('We received your message — we will be in touch within one business day.', replyInner),
+        html: shell('We have your message — we will be in touch within one business day.', replyInner),
         text: replyText
       });
     } catch (e) { /* confirmation is non-critical; the lead is already captured */ }
