@@ -26,6 +26,8 @@ a{text-decoration:none;color:inherit;}
 .hero .headline{margin:0 auto;max-width:18ch;font-size:clamp(40px,5.6vw,72px);line-height:1.04;letter-spacing:-.015em;}
 .hero .sub{margin:26px auto 38px;max-width:58ch;font-size:19px;}
 .hero .cta-row{justify-content:center;}
+.hero-logo{display:block;width:min(440px,80%);height:auto;margin:0 auto 34px;}
+@media(max-width:560px){.hero-logo{width:min(280px,72%);}}
 .hero-proof{margin-top:66px;padding-top:30px;border-top:1px solid var(--line);}
 .hero-proof .pl{color:var(--iron);font-size:11px;letter-spacing:.3em;text-transform:uppercase;margin-bottom:20px;}
 .hero-proof .row{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 44px;align-items:center;}
