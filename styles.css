@@ -91,6 +91,11 @@ html.js .reveal.in{opacity:1;transform:none;}
 .form input::placeholder,.form textarea::placeholder{color:#54545c;}
 .form input:focus,.form textarea:focus{outline:none;border-color:var(--gold);}
 .form textarea{min-height:108px;resize:vertical;}
+.form select{width:100%;background:#0b0b0e;border:1px solid var(--line);border-radius:6px;color:var(--bone);font-family:'Inter',sans-serif;font-size:15px;padding:12px 40px 12px 14px;transition:border-color .15s ease;cursor:pointer;appearance:none;-webkit-appearance:none;-moz-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23A88B4D' stroke-width='1.6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;}
+.form select:focus{outline:none;border-color:var(--gold);}
+.form select:required:invalid{color:#54545c;}
+.form select option{color:var(--bone);background:#0b0b0e;}
+#f-links{min-height:62px;}
 .form button.btn{width:100%;border:none;cursor:pointer;font-size:13px;padding:15px;margin-top:6px;}
 .form-msg{margin-top:14px;font-size:14px;min-height:20px;text-align:center;}
 .form-msg.ok{color:var(--gold);}

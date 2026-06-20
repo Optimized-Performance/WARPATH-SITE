@@ -88,7 +88,7 @@ module.exports = async function handler(req, res) {
   }
   body = body || {};
 
-  const { name, email, business, message, botcheck } = body;
+  const { name, email, business, projectType, timeline, links, message, botcheck } = body;
 
   // Honeypot: bots fill this; humans never see it.
   if (botcheck) return res.status(200).json({ success: true });
@@ -108,6 +108,9 @@ module.exports = async function handler(req, res) {
     name: clip(name, 200),
     email: clip(email, 320),
     business: clip(business, 200),
+    projectType: clip(projectType, 80),
+    timeline: clip(timeline, 80),
+    links: clip(links, 1500),
     message: clip(message, 5000)
   };
 
@@ -122,6 +125,14 @@ module.exports = async function handler(req, res) {
 
   const from = '"Warpath Collective" <' + fromAddr + '>';
   const msgHtml = esc(lead.message).replace(/\n/g, '<br>');
+  // Linkify the "review first" URLs so they're clickable in the inbox.
+  const linksHtml = esc(lead.links).replace(/\n/g, '<br>').replace(
+    /((?:https?:\/\/|www\.)[^\s<]+)/g,
+    function (u) {
+      var href = u.indexOf('http') === 0 ? u : 'http://' + u;
+      return '<a href="' + href + '" style="color:' + RUST + ';">' + u + '</a>';
+    }
+  );
 
   // --- Internal "new lead" email -------------------------------------------
   const leadInner =
@@ -130,7 +141,10 @@ module.exports = async function handler(req, res) {
     '<table role="presentation" width="100%" cellpadding="0" cellspacing="0">' +
     row('Email', '<a href="mailto:' + esc(lead.email) + '" style="color:' + RUST + ';text-decoration:none;">' + esc(lead.email) + '</a>') +
     row('Business', esc(lead.business || '—')) +
+    row('Project type', esc(lead.projectType || '—')) +
+    row('Timeline', esc(lead.timeline || '—')) +
     row('What they need', msgHtml) +
+    (lead.links ? row('To review first', linksHtml) : '') +
     '</table>' +
     '<div style="padding-top:30px;">' +
     '<a href="mailto:' + esc(lead.email) + '?subject=' + encodeURIComponent('Re: your Warpath Collective inquiry') + '" ' +
@@ -141,7 +155,10 @@ module.exports = async function handler(req, res) {
     'New Warpath Collective lead\n\n' +
     'Name: ' + lead.name + '\n' +
     'Email: ' + lead.email + '\n' +
-    'Business: ' + (lead.business || '-') + '\n\n' +
+    'Business: ' + (lead.business || '-') + '\n' +
+    'Project type: ' + (lead.projectType || '-') + '\n' +
+    'Timeline: ' + (lead.timeline || '-') + '\n' +
+    (lead.links ? 'To review first:\n' + lead.links + '\n' : '') + '\n' +
     'What they need:\n' + lead.message + '\n';
 
   // --- Customer-facing auto-reply ------------------------------------------
