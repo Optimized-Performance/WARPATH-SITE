@@ -94,6 +94,17 @@ html.js .reveal.in{opacity:1;transform:none;}
 .form-msg.ok{color:var(--gold);}
 .form-msg.err{color:#cc8866;}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden;}
+.navdrop{position:relative;display:inline-flex;align-items:center;}
+.navdrop::after{content:"";position:absolute;top:100%;left:-12px;right:-12px;height:16px;}
+.navtrigger{display:inline-flex;align-items:center;gap:8px;background:none;border:0;cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:rgba(232,230,223,.66);padding:0;transition:color .15s ease;}
+.navtrigger::after{content:"";width:5px;height:5px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);margin-top:-3px;opacity:.7;transition:transform .18s ease,margin-top .18s ease;}
+.navtrigger:hover,.navdrop:hover .navtrigger{color:var(--gold);}
+.navdrop:hover .navtrigger::after{transform:rotate(-135deg);margin-top:2px;}
+.navmenu{position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(8px);margin-top:14px;min-width:224px;background:rgba(14,14,18,.97);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:11px;padding:8px;opacity:0;visibility:hidden;transition:opacity .16s ease,transform .16s ease;box-shadow:0 26px 64px -18px rgba(0,0,0,.75);z-index:60;}
+.navdrop:hover .navmenu,.navdrop:focus-within .navmenu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
+.navmenu a{display:block;padding:10px 13px;border-radius:7px;font-size:13.5px;letter-spacing:0;text-transform:none;color:rgba(232,230,223,.72);white-space:nowrap;transition:background .12s ease,color .12s ease;}
+.navmenu a:hover{background:rgba(168,139,77,.10);color:var(--bone);}
+@media(max-width:760px){.navdrop{display:none;}}
 .shot{aspect-ratio:16/10;border-radius:8px;border:1px solid var(--line);background:radial-gradient(120% 120% at 50% 0,#1b1b21,#0f0f13);display:flex;align-items:center;justify-content:center;margin-bottom:20px;overflow:hidden;}
 .shot span{font-family:'Cinzel',serif;color:var(--iron);font-size:11px;letter-spacing:.24em;text-transform:uppercase;}
 .shot img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
