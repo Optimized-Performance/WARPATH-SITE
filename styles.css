@@ -116,7 +116,7 @@ html.js .reveal.in{opacity:1;transform:none;}
 .navdrop:hover .navmenu,.navdrop:focus-within .navmenu{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0);}
 .navmenu a{display:block;padding:10px 13px;border-radius:7px;font-size:13.5px;letter-spacing:0;text-transform:none;color:rgba(232,230,223,.72);white-space:nowrap;transition:background .12s ease,color .12s ease;}
 .navmenu a:hover{background:rgba(168,139,77,.10);color:var(--bone);}
-@media(max-width:760px){.topbar-inner{position:relative;}
+@media(max-width:960px){.topbar-inner{position:relative;}
 .hamburger{display:flex;flex-direction:column;justify-content:center;gap:5px;width:44px;height:38px;cursor:pointer;}
 .hamburger span{display:block;height:2px;width:24px;background:var(--bone);border-radius:2px;transition:transform .2s ease,opacity .2s ease;}
 .nav-toggle:checked ~ .hamburger span:nth-child(1){transform:translateY(7px) rotate(45deg);}
